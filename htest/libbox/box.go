@@ -23,7 +23,15 @@ func main() {
 	content, err := os.ReadFile("./htest/a.json")
 	json.Unmarshal(content, &options)
 	fmt.Println(string(content))
-	libbox.Setup("./htest/", "./htest/", "./htest/tmp/", true)
+	if err := libbox.Setup(&libbox.SetupOptions{
+		BasePath:    "./htest/",
+		WorkingPath: "./htest/",
+		TempPath:    "./htest/tmp/",
+		IsTVOS:      true,
+	}); err != nil {
+		fmt.Println(err)
+		return
+	}
 	ctx, cancel := context.WithCancel(context.Background())
 	ctx = filemanager.WithDefault(ctx, "./htest/", "./htest/tmp/", os.Getuid(), os.Getgid())
 	urlTestHistoryStorage := urltest.NewHistoryStorage()
@@ -97,7 +105,15 @@ func main() {
 	content, err = os.ReadFile("./htest/a.json")
 	json.Unmarshal(content, &options)
 	fmt.Println(string(content))
-	libbox.Setup("./htest/", "./htest/", "./htest/", true)
+	if err := libbox.Setup(&libbox.SetupOptions{
+		BasePath:    "./htest/",
+		WorkingPath: "./htest/",
+		TempPath:    "./htest/",
+		IsTVOS:      true,
+	}); err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	urlTestHistoryStorage = urltest.NewHistoryStorage()
 
@@ -158,3 +174,4 @@ func main() {
 	<-sigCh
 
 }
+

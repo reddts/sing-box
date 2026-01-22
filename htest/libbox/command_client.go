@@ -19,12 +19,14 @@ func (cch *CommandClientHandler) Disconnected(message string) {
 	cch.logger.Debug("DISCONNECTED: ", message)
 }
 
-func (cch *CommandClientHandler) ClearLog() {
+func (cch *CommandClientHandler) ClearLogs() {
 	cch.logger.Debug("clear log")
 }
 
-func (cch *CommandClientHandler) WriteLog(message string) {
-	cch.logger.Debug("log: ", message)
+func (cch *CommandClientHandler) WriteLogs(messageList libbox.StringIterator) {
+	for messageList.HasNext() {
+		cch.logger.Debug("log: ", messageList.Next())
+	}
 }
 
 func (cch *CommandClientHandler) WriteStatus(message *libbox.StatusMessage) {
@@ -76,6 +78,28 @@ func (cch *CommandClientHandler) UpdateClashMode(newMode string) {
 	cch.logger.Debug("update clash mode: ", newMode)
 }
 
+func (cch *CommandClientHandler) WriteConnections(message *libbox.Connections) {
+	if message == nil {
+		return
+	}
+	message.FilterState(libbox.ConnectionStateAll)
+	message.SortByTrafficTotal()
+	iterator := message.Iterator()
+	for iterator.HasNext() {
+		connection := iterator.Next()
+		cch.logger.Debug(
+			"connection: ",
+			connection.Network,
+			" ",
+			connection.DisplayDestination(),
+			" uplink=",
+			connection.UplinkTotal,
+			" downlink=",
+			connection.DownlinkTotal,
+		)
+	}
+}
+
 type OutboundGroup struct {
 	Tag      string               `json:"tag"`
 	Type     string               `json:"type"`
@@ -89,3 +113,4 @@ type OutboundGroupItem struct {
 	URLTestTime  int64  `json:"url-test-time"`
 	URLTestDelay int32  `json:"url-test-delay"`
 }
+
