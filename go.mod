@@ -132,6 +132,6 @@ require (
 	lukechampine.com/blake3 v1.4.0 // indirect
 )
 
-replace github.com/sagernet/wireguard-go => github.com/hiddify/wireguard-go v0.0.0-20240727191222-383c1da14ff1
+replace github.com/sagernet/wireguard-go => github.com/reddts/wireguard-go v0.0.0-20260122024552-0cc2e9dbf37b
 
-replace github.com/xtls/xray-core => github.com/hiddify/xray-core v0.0.0-20250413171226-57bd02ee2c86
+replace github.com/xtls/xray-core => github.com/reddts/xray-core v0.0.0-20260122035639-4d34a9263df3
