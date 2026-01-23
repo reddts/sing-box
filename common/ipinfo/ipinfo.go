@@ -22,15 +22,9 @@ import (
 )
 
 var providers = []Provider{
-	NewIpWhoIsProvider(),
+	// Keep a minimal set of reliable providers to avoid 403/blocked endpoints.
 	NewIpSbProvider(),
-	NewIpApiCoProvider(),
-	NewIpInfoIoProvider(),
-	NewFreeIpApiProvider(),
-	NewIpApiProvider(),
-	NewMyIPExpertProvider(),
-	NewMyIPioProvider(),
-	NewReallyFreeGeoIPProvider(),
+	NewIpWhoIsProvider(),
 }
 
 var fallbackProviders = []Provider{
